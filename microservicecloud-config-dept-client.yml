@@ -1,0 +1,40 @@
+server:
+  port: 8001 #注册中心占用8001端口，冒号前面必须有空格
+spring:
+  profiles:
+    active: dev
+
+---
+spring:
+  profiles: dev
+  application:
+    name: microservice-config-dept-client
+  datasource:
+    type:
+      com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://localhost:3306/clouddb01
+    username: root
+    password: 1234
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-total: 5
+      max-wait-millis: 200
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml
+  type-aliases-package: com.gao.springcloud.entities
+  mapper:-locations:
+    - classpath: mybatis/mapper/**/*.xml
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka
+  instance:
+    instance-id: dept-8001.com
+    prefer-ip-address: true
+info:
+  app.name: gao-microservicecloud-springcloudconfig01
+  company.name: www.gao.com
+  buid.artifactId: $project.artifactId$
+  buid.version: $project.version$
